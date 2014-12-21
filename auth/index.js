@@ -7,14 +7,14 @@
   var passport = require("passport");
   var localStrategy = require("passport-local").Strategy;
 
-  function userVerify(username, password, next) {
+  function userVerify(username, password, next) {   
     data.getUser(username, function (err, user) {
       if (!err && user) {
         var testHash = hasher.computeHash(password, user.salt);
-        if (testHash === user.passwordHash) {
+        if (testHash === user.passwordHash) {            
           next(null, user);
           return;
-        } 
+        }        
       }
       next(null, false, { message: "Invalid Credentials." });
     });

@@ -1,4 +1,9 @@
 Note Dashboard
 ========
 
-This nodejs project will focus on authentication and how to make a note dashboard
+Simple dashboard for notes with authentication based on passport. 
+
+To run it:
+->parts start mongodb
+->grunt
+then http://{{domain}}:3000/
