@@ -20,7 +20,6 @@
   };
 
   data.getNotes = function (categoryName, next) {
-    console.log(categoryName);
     database.getDb(function (err, db) {
       if (err) {
         next(err);
@@ -68,6 +67,26 @@
             }
           }
         });
+      }
+    });
+  };
+
+  data.addUser = function (user, next) {
+    database.getDb(function (err, db) {
+      if (err) {
+        console.log("Failed to seed database: " + err);
+      } else {
+        db.users.insert(user, next);
+      }
+    });
+  };
+
+  data.getUser = function (username, next) {
+    database.getDb(function (err, db) {
+      if (err) {
+        next(err);
+      } else {
+        db.users.findOne({ username: username }, next);
       }
     });
   };

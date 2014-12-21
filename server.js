@@ -12,11 +12,11 @@ var app = express();
 app.set("view engine","vash");
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(cookieParser())
+app.use(cookieParser());
 
-app.use(session({ secret: 'behavior', resave: false, saveUninitialized: true}))
+app.use(session({ secret: 'behavior', resave: false, saveUninitialized: true}));
 
 app.use(flash());
 
@@ -25,6 +25,10 @@ app.use(bodyParser.json())
 
 //set the public static resource folder
 app.use(express.static(__dirname + "/public"));
+
+//use authentication
+var auth = require("./auth");
+auth.init(app);
 
 // Map the routes
 controllers.init(app);
