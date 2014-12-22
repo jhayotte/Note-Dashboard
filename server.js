@@ -15,7 +15,7 @@ app.set("view engine","vash");
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cookieParser());
-
+//app.use(express.cookieSession({ secret: 'tobo!', maxAge: 360*5 }));
 app.use(session({ secret: 'behavior', resave: false, saveUninitialized: true}));
 
 app.use(flash());

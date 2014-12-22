@@ -8,8 +8,12 @@
   var localStrategy = require("passport-local").Strategy;
 
   function userVerify(username, password, next) {   
-    data.getUser(username, function (err, user) {
-      if (!err && user) {
+    data.getUser(username, function (err, user) {      
+      if(!user){        
+        next(null, false, { message: "Invalid Credentials." });
+      }
+      
+      if (!err && user) {        
         var testHash = hasher.computeHash(password, user.salt);
         if (testHash === user.passwordHash) {            
           next(null, user);
@@ -40,7 +44,7 @@
 
     // setup passport authentication
     passport.use(new localStrategy(userVerify));
-    passport.serializeUser(function (user, next) {
+    passport.serializeUser(function (user, next) {      
       next(null, user.username);
     });
     passport.deserializeUser(function (key, next) {
@@ -58,14 +62,16 @@
     app.get("/login", function (req, res) {
       res.render("login", { title: "Login to The Board", message: req.flash("loginError") });
     });
+ 
 
     app.post("/login", function (req, res, next) {
       var authFunction = passport.authenticate("local", function (err, user, info) {
         if (err) {
           next(err);
-        } else {
-          req.logIn(user, function (err) {
+        } else {      
+          req.logIn(user, function (err) {             
             if (err) {
+              console.log("err: " + err);
               next(err);
             } else {
               res.redirect("/");
